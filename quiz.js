@@ -10,7 +10,10 @@ $(function() {
 		var answer = $selected.text();
 		//console.log(answer);
 
-		$.post('_answer.php', {}, function(res) {
+		$.post('_answer.php', {
+			answer: answer,
+			token: $('#token').val()
+		}, function(res) {
 			//alert(res.correct_answer);
 			$('.answer').each(function() {
 				if($(this).text() === res.correct_answer) {
@@ -26,8 +29,15 @@ $(function() {
 				// wrong!
 				$selected.text(answer + ' ...WRONG!');
 			}
+			$('#btn').removeClass('disabled');
 		});
 
+	});
+
+	$('#btn').on('click', function() {
+		if(!$(this).hasClass('disabled')){
+			location.reload();
+		}
 	});
 
 });
